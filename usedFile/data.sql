@@ -1,0 +1,1 @@
+INSERT INTO widgets (id,name,purpose) VALUES (1,'widget1','used for testing purpose');
