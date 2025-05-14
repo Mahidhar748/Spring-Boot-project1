@@ -56,4 +56,10 @@ public class BookImplTest {
         verify(jdbcTemplate).update("UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?",
                 "123-256", "java", 1L , book.getSibn());
     }
+    @Test
+    public void testDeleteGenerateCorrectSql(){
+        bookDaoImpl.delete("123-256");
+        verify(jdbcTemplate).update("DELETE FROM books WHERE isbn = ?","123-256");
+
+    }
 }

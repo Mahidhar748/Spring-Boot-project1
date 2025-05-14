@@ -62,4 +62,13 @@ public class BookDaoImplIntegrationTests {
         underTest.update(book.getSibn(),book);
         assertThat(underTest.findOne(book.getSibn()).get().getTitle()).isEqualTo("Java with Spring Boot");
     }
+    @Test
+    public void testThatBookDeleteCanDeleteFromDB(){
+        authorDao.create(TestDatautil.createAuthorA());
+        Book book = TestDatautil.createBookA();
+        underTest.create(book);
+        underTest.delete(book.getSibn());
+        Optional<Book> result = underTest.findOne(book.getSibn());
+        assertThat(result).isEmpty();
+    }
 }

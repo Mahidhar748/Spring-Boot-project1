@@ -56,6 +56,11 @@ public class AuthorImplTest {
                 1L,"mahi",23,1L
                 );
     }
+    @Test
+    public void testThatDeleteIsGeneratingCorrectSql(){
+        underTest.delete(1L);
+        verify(jdbcTemplate).update("DELETE FROM authors WHERE id = ?", 1L);
+    }
 
 
 }

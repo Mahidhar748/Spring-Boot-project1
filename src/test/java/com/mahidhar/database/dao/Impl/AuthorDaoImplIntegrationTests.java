@@ -55,7 +55,14 @@ public class AuthorDaoImplIntegrationTests {
         underTest.update(1L,author);
 
         assertThat(underTest.findOne(1L).get().getName()).isEqualTo("mahidhar");
-
+    }
+    @Test
+    public void testThatDeleteCanRemoveRecordsFromDB(){
+        Author author = TestDatautil.createAuthorA();
+        underTest.create(author);
+        underTest.delete(author.getId());
+        Optional<Author> result = underTest.findOne(author.getId());
+        assertThat(result).isEmpty();
     }
 
 }
