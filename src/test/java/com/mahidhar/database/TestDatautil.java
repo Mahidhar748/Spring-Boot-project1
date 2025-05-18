@@ -9,40 +9,41 @@ public final class TestDatautil {
     }
 
     public static Author createAuthorA() {
-        return new Author().builder()
+        return Author.builder()
                 .id(1L)
                 .name("mahi")
                 .age(23)
                 .build();
     }
     public static Author createAuthorB() {
-        return new Author().builder()
+        return Author.builder()
                 .id(2L)
                 .name("abdhul kamal")
                 .age(80)
                 .build();
     }
     public static Author createAuthorC() {
-        return new Author().builder()
+//        new Author();
+        return Author.builder()
                 .id(3L)
                 .name("sri sri")
-                .age(90)
+                .age(70)
                 .build();
     }
 
 
-    public static Book createBookA() {
-        return new Book().builder()
+    public static Book createBookA(final Author author) {
+        return Book.builder()
                 .sibn("123-256")
                 .title("java")
-                .id(1L)
+                .author(author)
                 .build();
     }
-    public static Book createBookB(){
-        return new Book().builder()
+    public static Book createBookB(final Author author){
+        return Book.builder()
                 .sibn("434-256")
                 .title("wings of fire")
-                .id(2L)
+                .author(author)
                 .build();
     }
 }

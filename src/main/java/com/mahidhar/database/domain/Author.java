@@ -1,14 +1,10 @@
 package com.mahidhar.database.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @NoArgsConstructor
@@ -18,9 +14,11 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(name = "authors")
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "author_id")
+//@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //I commented @GeneratedValue due to it is creating exception when we are giving value directly
     private Long id;
     private String name;
     private Integer age;
+
 
 }
