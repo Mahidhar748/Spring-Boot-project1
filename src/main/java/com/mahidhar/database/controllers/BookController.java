@@ -1,7 +1,7 @@
 package com.mahidhar.database.controllers;
 
-import com.mahidhar.database.domain.Author;
-import com.mahidhar.database.domain.Book;
+import com.mahidhar.database.domain.Entities.AuthorEntity;
+import com.mahidhar.database.domain.Entities.BookEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,16 +11,16 @@ public class BookController {
 
     @GetMapping(path = "/books")
     @ResponseBody
-    public Book getBook(){
-        Author author = Author.builder()
+    public BookEntity getBook(){
+        AuthorEntity authorEntity = AuthorEntity.builder()
                 .id(1L)
                 .name("abdul Kamal")
                 .age(90)
                 .build();
-        return Book.builder()
+        return BookEntity.builder()
                 .sibn("123-321")
                 .title("wing of fire")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
     }
 }

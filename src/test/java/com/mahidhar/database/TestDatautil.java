@@ -1,30 +1,30 @@
 package com.mahidhar.database;
 
-import com.mahidhar.database.domain.Author;
-import com.mahidhar.database.domain.Book;
+import com.mahidhar.database.domain.Entities.AuthorEntity;
+import com.mahidhar.database.domain.Entities.BookEntity;
 
 public final class TestDatautil {
     private TestDatautil(){
 
     }
 
-    public static Author createAuthorA() {
-        return Author.builder()
+    public static AuthorEntity createAuthorA() {
+        return AuthorEntity.builder()
                 .id(1L)
                 .name("mahi")
                 .age(23)
                 .build();
     }
-    public static Author createAuthorB() {
-        return Author.builder()
+    public static AuthorEntity createAuthorB() {
+        return AuthorEntity.builder()
                 .id(2L)
                 .name("abdhul kamal")
                 .age(80)
                 .build();
     }
-    public static Author createAuthorC() {
-//        new Author();
-        return Author.builder()
+    public static AuthorEntity createAuthorC() {
+//        new AuthorEntity();
+        return AuthorEntity.builder()
                 .id(3L)
                 .name("sri sri")
                 .age(70)
@@ -32,18 +32,18 @@ public final class TestDatautil {
     }
 
 
-    public static Book createBookA(final Author author) {
-        return Book.builder()
+    public static BookEntity createBookA(final AuthorEntity authorEntity) {
+        return BookEntity.builder()
                 .sibn("123-256")
                 .title("java")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
     }
-    public static Book createBookB(final Author author){
-        return Book.builder()
+    public static BookEntity createBookB(final AuthorEntity authorEntity){
+        return BookEntity.builder()
                 .sibn("434-256")
                 .title("wings of fire")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
     }
 }

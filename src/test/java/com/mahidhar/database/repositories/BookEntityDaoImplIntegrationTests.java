@@ -1,8 +1,8 @@
 package com.mahidhar.database.repositories;
 
 import com.mahidhar.database.TestDatautil;
-import com.mahidhar.database.domain.Author;
-import com.mahidhar.database.domain.Book;
+import com.mahidhar.database.domain.Entities.AuthorEntity;
+import com.mahidhar.database.domain.Entities.BookEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,49 +17,49 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BookDaoImplIntegrationTests {
+public class BookEntityDaoImplIntegrationTests {
 
     private final AuthorRepository authorDao;
 
     private final BookRepository underTest;
     @Autowired
-    public BookDaoImplIntegrationTests(BookRepository underTest,AuthorRepository authorDao) {
+    public BookEntityDaoImplIntegrationTests(BookRepository underTest, AuthorRepository authorDao) {
         this.underTest = underTest;
         this.authorDao = authorDao;
     }
     @Test
     public void testThatBookCanCreateAndGetFromDB(){
-        Author author = TestDatautil.createAuthorA();
-        authorDao.save(author);
-        Book book = TestDatautil.createBookA(author);
-        underTest.save(book);
-        Optional<Book> result = underTest.findById(book.getSibn());
+        AuthorEntity authorEntity = TestDatautil.createAuthorA();
+        authorDao.save(authorEntity);
+        BookEntity bookEntity = TestDatautil.createBookA(authorEntity);
+        underTest.save(bookEntity);
+        Optional<BookEntity> result = underTest.findById(bookEntity.getSibn());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(book);
+        assertThat(result.get()).isEqualTo(bookEntity);
 
     }
     @Test
     public void testThatFindAllIsGeneratingALLBooksFromDB(){
         underTest.save(TestDatautil.createBookA(TestDatautil.createAuthorA()));
         underTest.save(TestDatautil.createBookB(TestDatautil.createAuthorB()));
-        Iterable<Book> result = underTest.findAll();
+        Iterable<BookEntity> result = underTest.findAll();
         assertThat(result).hasSize(2);
 
     }
     @Test
     public void testThatUpdateBookIsCorrectlyUpdatingDB(){
-        Book book = TestDatautil.createBookA(TestDatautil.createAuthorA());
-        underTest.save(book);
-        book.setTitle("Java with Spring Boot");
-        underTest.save(book);
-        assertThat(underTest.findById(book.getSibn()).get().getTitle()).isEqualTo("Java with Spring Boot");
+        BookEntity bookEntity = TestDatautil.createBookA(TestDatautil.createAuthorA());
+        underTest.save(bookEntity);
+        bookEntity.setTitle("Java with Spring Boot");
+        underTest.save(bookEntity);
+        assertThat(underTest.findById(bookEntity.getSibn()).get().getTitle()).isEqualTo("Java with Spring Boot");
     }
     @Test
     public void testThatBookDeleteCanDeleteFromDB(){
-        Book book = TestDatautil.createBookA(TestDatautil.createAuthorA());
-        underTest.save(book);
-        underTest.deleteById(book.getSibn());
-        Optional<Book> result = underTest.findById(book.getSibn());
+        BookEntity bookEntity = TestDatautil.createBookA(TestDatautil.createAuthorA());
+        underTest.save(bookEntity);
+        underTest.deleteById(bookEntity.getSibn());
+        Optional<BookEntity> result = underTest.findById(bookEntity.getSibn());
         assertThat(result).isEmpty();
     }
 }

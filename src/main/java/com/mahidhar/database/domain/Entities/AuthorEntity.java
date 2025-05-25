@@ -1,4 +1,4 @@
-package com.mahidhar.database.domain;
+package com.mahidhar.database.domain.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "authors")
-public class Author {
+public class AuthorEntity {
     @Id
 //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //I commented @GeneratedValue due to it is creating exception when we are giving value directly
