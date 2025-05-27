@@ -1,26 +1,32 @@
 package com.mahidhar.database.controllers;
 
-import com.mahidhar.database.domain.Entities.AuthorEntity;
 import com.mahidhar.database.domain.Entities.BookEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.mahidhar.database.domain.dto.BookDto;
+import com.mahidhar.database.mappers.Mapper;
+import com.mahidhar.database.services.BookService;
+import com.mahidhar.database.services.impl.BookServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BookController {
 
-    @GetMapping(path = "/books")
-    @ResponseBody
-    public BookEntity getBook(){
-        AuthorEntity authorEntity = AuthorEntity.builder()
-                .id(1L)
-                .name("abdul Kamal")
-                .age(90)
-                .build();
-        return BookEntity.builder()
-                .sibn("123-321")
-                .title("wing of fire")
-                .authorEntity(authorEntity)
-                .build();
+    private final BookService bookService;
+
+    private final Mapper<BookEntity,BookDto> bookMapper;
+
+    public BookController(Mapper<BookEntity,BookDto> bookMapper, BookService bookService){
+        this.bookMapper = bookMapper;
+        this.bookService = bookService;
+    }
+
+    @PutMapping(path = "/books/{isbn}")
+    public ResponseEntity<BookDto> createBook(@PathVariable("isbn") String isbn,
+                                              @RequestBody BookDto bookDto){
+        BookEntity bookEntity = bookMapper.mapFrom(bookDto);
+        BookEntity savedBookEntity = bookService.createBook(isbn, bookEntity);
+        return new ResponseEntity<>(bookMapper.mapTo(savedBookEntity), HttpStatus.CREATED);
+
     }
 }
