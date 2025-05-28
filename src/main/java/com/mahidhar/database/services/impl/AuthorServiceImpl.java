@@ -19,4 +19,10 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(authorEntity);
 
     }
+
+    @Override
+    public AuthorEntity getAuthorById(Long id) {
+        return authorRepository.findById(id).isPresent() ?
+                authorRepository.findById(id).get():null;
+    }
 }
