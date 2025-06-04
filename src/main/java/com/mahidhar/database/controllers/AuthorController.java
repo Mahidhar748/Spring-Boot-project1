@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @RestController
 public class AuthorController {
 
@@ -27,10 +31,24 @@ public class AuthorController {
         AuthorEntity savedAuthorEntity =  authorService.createAuthorEntity(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
+    @GetMapping(path = "/authors")
+    public List<AuthorDto> listAuthors(){
+        List<AuthorEntity> authorEntityList = authorService.findAll();
+
+        return authorEntityList.
+                stream().
+                map(authorMapper::mapTo)
+                .collect(Collectors.toList());
+    }
     @GetMapping(path = "/authors/{id}")
     public ResponseEntity<AuthorDto> getAuthorById(@PathVariable("id") Long id){
-        AuthorEntity authorEntity = authorService.getAuthorById(id);
-        return new ResponseEntity<>(authorMapper.mapTo(authorEntity), HttpStatus.ACCEPTED);
+        Optional<AuthorEntity> authorEntity = authorService.getAuthorById(id);
+        return authorEntity.map(authorEntity1 -> {
+            AuthorDto authorDto = authorMapper.mapTo(authorEntity1);
+            return new ResponseEntity<AuthorDto>(authorDto,HttpStatus.OK);
+        }).orElse(
+                 new ResponseEntity<>(HttpStatus.NOT_FOUND)
+        );
     }
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {

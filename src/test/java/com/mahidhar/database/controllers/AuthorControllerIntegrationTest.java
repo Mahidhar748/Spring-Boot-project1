@@ -60,5 +60,26 @@ public class AuthorControllerIntegrationTest {
         );
 
     }
+    @Test
+    public void testThatListAuthorsGenerateAuthors() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors")
+                        .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+    @Test
+    public void testThatGetAuthorsByIdGenerateStatusCode200Ok() throws Exception{
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(
+                MockMvcResultMatchers.status()
+                        .isOk()
+        );
+    }
 
 }

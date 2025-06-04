@@ -43,5 +43,14 @@ public class BookControllerIntegrationTest {
                 MockMvcResultMatchers.status().isCreated()
         );
     }
+    @Test
+    public void testThatGetBooksGenerateStatusCode200() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books").
+                        contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
 
 }
