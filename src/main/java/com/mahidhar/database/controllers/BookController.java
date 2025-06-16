@@ -5,6 +5,8 @@ import com.mahidhar.database.domain.dto.BookDto;
 import com.mahidhar.database.mappers.Mapper;
 import com.mahidhar.database.services.BookService;
 import com.mahidhar.database.services.impl.BookServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +36,8 @@ public class BookController {
 
     }
     @GetMapping(path = "/books")
-    public List<BookDto> getBooks(){
-        List<BookEntity> bookEntityList = bookService.findAll();
-        return bookEntityList.stream()
-                .map(bookMapper::mapTo)
-                .collect(Collectors.toList());
+    public Page<BookDto> getBooks(Pageable pageable){
+        Page<BookEntity> bookEntityList = bookService.findAll(pageable);
+        return bookEntityList.map(bookMapper::mapTo);
     }
 }
